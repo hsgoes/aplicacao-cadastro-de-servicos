@@ -1,8 +1,13 @@
 package com.project.cadastrodeservicos.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Builder
 @Entity
 @Table(name = "TB_CLIENTE")
 public class Cliente {
@@ -19,7 +24,13 @@ public class Cliente {
     private String cpf;
 
     @Column(name = "DT_CADASTRO")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
+
+    @PrePersist
+    public void prePersit() {
+        this.dataCadastro = LocalDate.now();
+    }
 
     public Cliente(){
     }
