@@ -38,4 +38,18 @@ public class ClienteController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Map<String, Boolean> deletarPorId(@PathVariable("id") Integer id) {
+        return repository.findById(id)
+                .map( cliente -> {
+                    repository.delete(cliente);
+                    Map<String, Boolean> map =  new HashMap<>();
+                    map.put("ok", true);
+                    return map;
+                })
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+
 }
