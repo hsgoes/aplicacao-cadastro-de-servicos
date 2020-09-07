@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,20 +35,18 @@ public class ClienteController {
     @GetMapping("/{id}")
     public Cliente buscarPorId(@PathVariable("id") Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Map<String, Boolean> deletarPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity deletarPorId(@PathVariable("id") Integer id) {
         return repository.findById(id)
                 .map( cliente -> {
                     repository.delete(cliente);
-                    Map<String, Boolean> map =  new HashMap<>();
-                    map.put("ok", true);
-                    return map;
+                    return ResponseEntity.ok("success!");
                 })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
     @PutMapping("{id}")
@@ -62,7 +59,7 @@ public class ClienteController {
                     repository.save(cliente);
                     return ResponseEntity.ok("success!");
                 })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
 }

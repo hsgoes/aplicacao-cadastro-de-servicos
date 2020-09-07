@@ -17,9 +17,11 @@ public class Cliente {
     private Integer id;
 
     @Column(name = "NOME", nullable = false, length = 150)
+    //@NotEmpty(${campo.cpf.obrigatorio})
     private String nome;
 
     @Column(name = "CPF",nullable = false, length = 11)
+    //@CPF("${campo.cpf.obrigatorio}")
     private String cpf;
 
     @Column(name = "DT_CADASTRO", updatable = false)
