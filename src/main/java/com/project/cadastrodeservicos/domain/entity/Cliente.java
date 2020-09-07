@@ -1,7 +1,6 @@
 package com.project.cadastrodeservicos.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 
 import javax.persistence.*;
@@ -23,7 +22,7 @@ public class Cliente {
     @Column(name = "CPF",nullable = false, length = 11)
     private String cpf;
 
-    @Column(name = "DT_CADASTRO")
+    @Column(name = "DT_CADASTRO", updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 

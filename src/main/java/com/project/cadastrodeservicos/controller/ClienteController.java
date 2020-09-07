@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,5 +52,17 @@ public class ClienteController {
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity atualizarPorId(@PathVariable("id") Integer id,
+                                         @RequestBody Cliente cliente) {
+        return repository.findById(id)
+                .map(obj -> {
+                    cliente.setId(obj.getId());
+                    repository.save(cliente);
+                    return ResponseEntity.ok("success!");
+                })
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
 }
