@@ -3,6 +3,7 @@ package com.project.cadastrodeservicos.domain.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "TB_SERVICO")
 public class Servico {
 
     @Id
